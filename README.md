@@ -38,15 +38,26 @@ do projeto é se um modelo de 1,5B ajustado chega perto do Gemini nela, rodando 
 
 ## Resultados
 
-_Pendente: preenchido depois da revisão do teste e do treino no Kaggle._
+Modelo publicado: [HowLuks/qwen2.5-1.5b-extrator-agendamentos-ptbr](https://huggingface.co/HowLuks/qwen2.5-1.5b-extrator-agendamentos-ptbr)
+(adaptador LoRA; treino de cerca de 15 minutos numa GPU T4 do Kaggle).
+
+_Resultado preliminar: 300 mensagens de teste ainda não revisadas à mão. O Gemini ainda não foi avaliado._
 
 | modelo | JSON válido | exata | intenção | serviço | profissional | data | hora | período |
 |---|---|---|---|---|---|---|---|---|
-| Qwen2.5-1.5B base | | | | | | | | |
-| Qwen2.5-1.5B + LoRA | | | | | | | | |
+| Qwen2.5-1.5B base | 100,0% | 18,3% | 84,7% | 82,0% | 91,7% | 50,0% | 85,7% | 65,0% |
+| Qwen2.5-1.5B + LoRA | 100,0% | **89,7%** | 98,0% | 99,7% | 99,3% | 92,7% | 100,0% | 100,0% |
 | Gemini 2.5 Flash | | | | | | | | |
 
 "Exata" é a fração de mensagens com todos os campos certos.
+
+- O ajuste leva o acerto completo de 18% para 90%. O modelo base já devolve JSON válido, mas erra muito a data
+  (50%) e confunde horário com período.
+- A data continua sendo o campo mais difícil depois do ajuste (92,7%): é o único que exige conta ("sexta" ou
+  "dia 12" a partir de hoje).
+- Por autor, o LoRA vai um pouco melhor nas mensagens dos agentes independentes (91,0% de acerto exato, 200 mensagens)
+  do que nas escritas pela sessão que montou o projeto (87,0%, 100 mensagens), então o resultado não depende de
+  quem conhecia a tarefa.
 
 ## Estrutura
 
