@@ -1,0 +1,2 @@
+# Local: geracao de dados e avaliacao do Gemini. O treino roda no Kaggle (ver notebooks/).
+google-genai>=1.0
