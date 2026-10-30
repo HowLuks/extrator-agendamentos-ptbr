@@ -103,6 +103,34 @@ campos são, no fundo, reconhecer um trecho da mensagem e copiá-lo ou mapeá-lo
 Se o modelo tivesse aprendido só os vícios de escrita de quem montou os dados, ele iria melhor nessas mensagens. Foi o
 contrário: o acerto é até um pouco maior nas mensagens dos agentes que não sabiam da tarefa.
 
+### O que os erros mostram
+
+Olhar as respostas uma a uma conta mais do que a tabela. Alguns casos do teste:
+
+**O modelo base preenche o que não foi dito.** Para "preciso remarcar meu horario, quando tem disponivel?", que não traz
+data nem hora, ele respondeu `"data": "2027-01-06", "hora": "19:00", "periodo": "noite"`. Para "bom dia, consigo
+marcar com o Marcos as 10h?", inventou o serviço (massagem relaxante) e a data. Ele também marca período junto com a
+hora, mesmo quando os dois se contradizem: "amanha 16h30" saiu com `"periodo": "manha"`.
+
+**O modelo base sai da lista.** O prompt diz quais são as intenções possíveis, mas ele responde "alterar" no lugar de
+"remarcar". Ele escreve o serviço como `sessao_de_casal` ou `avaliacao_fisica` em vez do nome do catálogo e põe o dia
+da semana no campo de período (`"periodo": "domingo"`). Também lê números ao pé da letra: "um orçamento dia 4 de manhã"
+virou `"hora": "04:00"`.
+
+**O modelo base confunde "outro" com "consultar".** "Quanto custa?", "oi, onde fica o estudio?" e "qual o endereço da
+barbearia?" saíram como `consultar`, ou seja, como se o cliente perguntasse por horário livre. O ajustado acerta esses
+casos.
+
+**Os erros do ajustado são mais sutis, e alguns são instrutivos.** Com hoje em quinta, 25 de fevereiro de 2027,
+"primeira consulta na quarta às 13h30" deveria virar 3 de março. O modelo respondeu `"data": "2027-02-30"`, uma data
+que não existe: ele somou os dias sem virar o mês. Esse é exatamente o tipo de conta que um modelo de linguagem faz mal
+e que um código de três linhas faz certo. Em outro caso, "hidratação de pelo pro thor" saiu com `"profissional":
+"Thor"`: o modelo tomou o nome do cachorro por um profissional, que nem está no catálogo.
+
+Os dois erros apontam para correções baratas fora do modelo: validar que a data existe e que o profissional está no
+catálogo antes de aceitar a resposta, ou pedir ao modelo uma data relativa ("próxima quarta") e deixar a conta para o
+código.
+
 ## O que isso diz (e o que ainda não diz)
 
 Para uma tarefa estreita e bem definida, um ajuste barato muda o jogo: 15 minutos numa GPU gratuita levaram um modelo de
@@ -124,7 +152,8 @@ depende do que veio antes), e são só 8 catálogos fixos.
 ## Próximos passos
 
 - Revisar o teste à mão e rodar o Gemini no mesmo conjunto.
-- Olhar os erros de data um a um, para ver se são de conta (dia da semana, virada de mês) ou de leitura.
+- Contar os erros de data por tipo (dia da semana, virada de mês, "dia N") e testar a validação da data e do catálogo
+  fora do modelo.
 - Testar o modelo em mensagens reais anonimizadas.
 
 ---
