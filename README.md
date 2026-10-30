@@ -29,8 +29,11 @@ do projeto é se um modelo de 1,5B ajustado chega perto do Gemini nela, rodando 
 - **Dados sintéticos:** o rótulo é sorteado primeiro ([extrator/dados.py](extrator/dados.py)) e a mensagem é escrita
   depois a partir dele. O gabarito fica correto por construção e não há dado de cliente real. Os campos vazios são
   proibidos explicitamente na instrução ("NÃO mencione data"), senão o LLM completa sozinho e o gabarito fica errado.
-- **Autores:** parte das mensagens foi escrita pelo Gemini e parte pelo Claude (campo `autor`). Isso permite medir se o
-  Gemini vai melhor nas mensagens que ele mesmo escreveu.
+- **Autores (campo `autor`):** `claude` são mensagens escritas na sessão que montou o projeto, que conhecia o formato
+  da tarefa; `claude-agente` são mensagens escritas por agentes independentes, sem contexto do projeto, que receberam só a
+  mesma instrução que o gerador manda ao Gemini. Separar os autores mostra se a métrica muda conforme quem escreveu.
+  O gerador com o Gemini (`gemini`) continua disponível para aumentar o dataset; com mensagens dele, dá para medir se o
+  Gemini vai melhor no que ele mesmo escreveu.
 - **Teste revisado à mão:** só entram na avaliação as mensagens do teste conferidas uma a uma.
 
 ## Resultados
