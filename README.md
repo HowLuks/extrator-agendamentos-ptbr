@@ -49,7 +49,8 @@ _Resultado preliminar: 300 mensagens de teste ainda não revisadas à mão. O Ge
 | Qwen2.5-1.5B + LoRA | 100,0% | **89,7%** | 98,0% | 99,7% | 99,3% | 92,7% | 100,0% | 100,0% |
 | Gemini 2.5 Flash | | | | | | | | |
 
-"Exata" é a fração de mensagens com todos os campos certos.
+"Exata" é a fração de mensagens com todos os campos certos. Análise completa no artigo:
+[docs/artigo.md](docs/artigo.md).
 
 - O ajuste leva o acerto completo de 18% para 90%. O modelo base já devolve JSON válido, mas erra muito a data
   (50%) e confunde horário com período.
