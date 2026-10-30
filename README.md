@@ -39,7 +39,7 @@ do projeto é se um modelo de 1,5B ajustado chega perto do Gemini nela, rodando 
 ## Resultados
 
 Modelo publicado: [HowLuks/qwen2.5-1.5b-extrator-agendamentos-ptbr](https://huggingface.co/HowLuks/qwen2.5-1.5b-extrator-agendamentos-ptbr)
-(adaptador LoRA; treino de cerca de 15 minutos numa GPU T4 do Kaggle).
+(adaptador LoRA; o notebook inteiro roda em cerca de 15 minutos numa GPU T4 do Kaggle).
 
 _Resultado preliminar: 300 mensagens de teste ainda não revisadas à mão. O Gemini ainda não foi avaliado._
 
